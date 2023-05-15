@@ -1,16 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CommonData : MonoBehaviour
 {
-#region Data
+    #region Data
     // TODO remove [SerializeFierld], used only for debug purpose
+    [SerializeField] private string containerName;
     [SerializeField] private GameObject championPrefab;
     [SerializeField] private string playerName;
     [SerializeField] private Text playerNameTextField;
-#endregion
+    [SerializeField] private int previousSceneNum;
+    [SerializeField] private string previousSceneName;
+    [SerializeField] private int currentSceneNum;
+    [SerializeField] private string currentSceneName;
+    [SerializeField] private bool runTheGame = true;
+
+    #endregion
 
     private void Awake()
     {
@@ -25,12 +34,22 @@ public class CommonData : MonoBehaviour
 
     void Start()
     {
+        previousSceneNum = -1;
+        previousSceneName = "NONE";
+        currentSceneNum = 0;
+        currentSceneName = ((Scene)currentSceneNum).ToString();
+        runTheGame = false;
+        ChangeScene changeScene = FindObjectOfType<ChangeScene>();
+        //changeScene.GoLoadScene(Scene.Game);
+        Debug.Log("Startuje async");
+        StartCoroutine(changeScene.AsynchronousLoad(Scene.Game));
         
+        Debug.Log("Chyba jeszcze dziala");
     }
 
     void Update()
     {
-        
+
     }
 
 #region Set Common Data
@@ -51,6 +70,14 @@ public class CommonData : MonoBehaviour
         }
         playerName = secretName;
     }
+
+    public void UpdateSceneData(int nextSceneNum)
+    {
+        previousSceneNum = currentSceneNum;
+        previousSceneName = currentSceneName;
+        currentSceneNum = nextSceneNum;
+        currentSceneName = ((Scene)nextSceneNum).ToString();
+    }
 #endregion
 
 #region get Common Data
@@ -63,5 +90,10 @@ public class CommonData : MonoBehaviour
     {
         return playerName;
     }
-#endregion
+
+    public string GetDataContainerName()
+    {
+        return containerName;
+    }
+    #endregion
 }

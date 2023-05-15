@@ -370,7 +370,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5996534347918688818, guid: 0e26393c47610c246b4e8a285993ec81, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5996534347918688820, guid: 0e26393c47610c246b4e8a285993ec81, type: 3}
       propertyPath: nextScene
@@ -1058,7 +1058,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7877999043187692913, guid: 140094d8054d6f44394c36d423de3730, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7877999043187692918, guid: 140094d8054d6f44394c36d423de3730, type: 3}
       propertyPath: playerNameTextField

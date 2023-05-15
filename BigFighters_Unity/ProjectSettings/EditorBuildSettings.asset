@@ -4,5 +4,29 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/MyScenes/LOADING.unity
+    guid: ae318a32fe8d02d41b9f31222aa08bad
+  - enabled: 1
+    path: Assets/MyScenes/MENU.unity
+    guid: 7809601a92a37d34b8644f010b7205c1
+  - enabled: 1
+    path: Assets/MyScenes/OPTIONS.unity
+    guid: 5af780e59c53c29429f7dc028632db8f
+  - enabled: 1
+    path: Assets/MyScenes/PLAY.unity
+    guid: 21954840eeb17024287c93df524c6910
+  - enabled: 1
+    path: Assets/MyScenes/ROOMS.unity
+    guid: 8f073883a082d734a96bf30ec4d15087
+  - enabled: 1
+    path: Assets/MyScenes/MAPS.unity
+    guid: 1b62f257086c04e4291c405c461bff89
+  - enabled: 1
+    path: Assets/MyScenes/LOBBY.unity
+    guid: 60d0afe3f5ba281428e16d40ad406125
+  - enabled: 1
+    path: Assets/MyScenes/huge.unity
+    guid: e94d47749dc03834eafd7ea2d22f9a18
   m_configObjects: {}
