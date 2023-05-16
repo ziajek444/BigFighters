@@ -13,11 +13,11 @@ public class CommonData : MonoBehaviour
     [SerializeField] private GameObject championPrefab;
     [SerializeField] private string playerName;
     [SerializeField] private Text playerNameTextField;
-    [SerializeField] private int previousSceneNum;
-    [SerializeField] private string previousSceneName;
-    [SerializeField] private int currentSceneNum;
-    [SerializeField] private string currentSceneName;
-    [SerializeField] private bool runTheGame = true;
+    [SerializeField] private int previousSceneNum=0;
+    [SerializeField] private string previousSceneName="Loading";
+    [SerializeField] private int currentSceneNum=1;
+    [SerializeField] private string currentSceneName="Menu";
+    private bool isGameStarted = false;
 
     #endregion
 
@@ -34,22 +34,11 @@ public class CommonData : MonoBehaviour
 
     void Start()
     {
-        previousSceneNum = -1;
-        previousSceneName = "NONE";
-        currentSceneNum = 0;
-        currentSceneName = ((Scene)currentSceneNum).ToString();
-        runTheGame = false;
-        ChangeScene changeScene = FindObjectOfType<ChangeScene>();
-        //changeScene.GoLoadScene(Scene.Game);
-        Debug.Log("Startuje async");
-        StartCoroutine(changeScene.AsynchronousLoad(Scene.Game));
-        
-        Debug.Log("Chyba jeszcze dziala");
     }
 
     void Update()
     {
-
+        
     }
 
 #region Set Common Data
@@ -65,7 +54,7 @@ public class CommonData : MonoBehaviour
         string secretName = playerName;
         for(int i = 0; i < 4; i++)
         {
-            int secretInt = Random.Range(0, 9999);
+            int secretInt = Random.Range(0, 99);
             secretName += secretInt.ToString();
         }
         playerName = secretName;
@@ -77,6 +66,21 @@ public class CommonData : MonoBehaviour
         previousSceneName = currentSceneName;
         currentSceneNum = nextSceneNum;
         currentSceneName = ((Scene)nextSceneNum).ToString();
+    }
+
+    public void SetBackScene()
+    {
+        var nextSceneNum = previousSceneNum;
+        var nextSceneName = previousSceneName;
+        previousSceneNum = currentSceneNum;
+        previousSceneName = currentSceneName;
+        currentSceneNum = nextSceneNum;
+        currentSceneName = nextSceneName;
+    }
+
+    public void SetGameStarted()
+    {
+        isGameStarted = true;
     }
 #endregion
 
@@ -95,5 +99,31 @@ public class CommonData : MonoBehaviour
     {
         return containerName;
     }
+
+    public int GetPreviousSceneNum()
+    {
+        return previousSceneNum;
+    }
+
+    public int GetCurrentSceneNum()
+    {
+        return currentSceneNum;
+    }
+
+    public string GetPreviousSceneName()
+    {
+        return previousSceneName;
+    }
+
+    public string GetCurrentSceneName()
+    {
+        return currentSceneName;
+    }
+
+    public bool GetGameStarted()
+    {
+        return isGameStarted;
+    }
+
     #endregion
 }

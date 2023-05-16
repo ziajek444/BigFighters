@@ -8,11 +8,24 @@ public class ChangeScene : MonoBehaviour
 {
     //[SerializeField] private Scene nextScene;
     private GameObject dataContainer;
-    private CommonData commonData_1;
+    [SerializeField] private CommonData commonData_1;
+    [SerializeField] private bool loadingStarted;
 
     private void Start()
     {
-        PrepareInitialData();
+        //PrepareInitialData();
+
+        loadingStarted = false;
+    }
+
+    private void Update()
+    {
+        if (!loadingStarted && !commonData_1.GetGameStarted())
+        {
+            loadingStarted = true;
+            StartCoroutine(AsynchronousLoad(commonData_1.GetCurrentSceneNum()));
+            commonData_1.SetGameStarted();
+        }
     }
 
     public void GoLoadScene(Scene _nextScene)
@@ -31,41 +44,28 @@ public class ChangeScene : MonoBehaviour
         }*/
 
 
-        Debug.Log("Try load scene !! " + ((Scene)_nextScene).ToString());
+        //Debug.Log("Try load scene !! " + ((Scene)_nextScene).ToString());
 
         //SceneManager.LoadSceneAsync((int)_nextScene);
         //SceneManager.LoadScene((int)_nextScene);
-        StartCoroutine(AsynchronousLoad(_nextScene));
+        //StartCoroutine(AsynchronousLoad(_nextScene));
     }
 
-    public IEnumerator AsynchronousLoad(Scene _nextScene)
+    public IEnumerator AsynchronousLoad(int _nextScene)
     {
-        Debug.Log("Co sie dzieje?");
         yield return null;
-        Debug.Log("Idziem dalej ");
-
-        AsyncOperation operation = SceneManager.LoadSceneAsync((int)_nextScene);
+        Debug.Log("Laduje " + ((Scene)(_nextScene)).ToString());
+        AsyncOperation operation = SceneManager.LoadSceneAsync(_nextScene, LoadSceneMode.Single);
         operation.allowSceneActivation = false;
         float progress = 0f;
 
-        //while (!operation.isDone)
         while (progress < 0.9f)
         {
-            // [0, 0.9] > [0, 1]
-            progress = Mathf.Clamp01(operation.progress / 0.9f);
-            Debug.Log("Loading progress: " + (progress * 100) + "%");
-
-            // Loading completed
-            /*if (operation.progress == 0.9f)
-            {
-                Debug.Log("Press a key to start");
-                if (Input.anyKeyDown)
-                    operation.allowSceneActivation = true;
-            }*/
-
-            yield return null;
+        progress = Mathf.Clamp01(operation.progress / 0.9f);
+        yield return null;
         }
         operation.allowSceneActivation = true;
+        yield return null;
     }
 
     private void PrepareInitialData()
